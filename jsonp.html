@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>img{ height: 100px; float: left; }</style>
+  <script src="jsonp.js"></script>
+</head>
+<body>
+	<div id="output">
+	</div>
+<script>
+// Example call
+JSONp.get({
+	url : 'http://api.flickr.com/services/feeds/photos_public.gne',
+	callbackName : 'jsoncallback',
+	opts : { tags: "cat", tagmode: "any", format: "json" },
+	success : function( json ){ 
+		var htmlArray = new Array();
+		
+		for( var i = 0; i < json.items.length; i++ ){
+			var item = json.items[i];
+			htmlArray.push('<img src="' + item.media.m + '" />');
+		}
+		
+		document.getElementById('output').innerHTML = htmlArray.join('');
+	} 
+});
+</script>
+
+</body>
+</html>
