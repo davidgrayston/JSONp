@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>img{ height: 100px; float: left; }</style>
+  <style type="text/css">
+  h1{ width:100%; float:left; }
+  div{ width:100%; float:left; }
+  img{ height: 100px; float: left; }
+  </style>
   <script src="jsonp.js"></script>
 </head>
 <body>
-	<div id="output">
+
+	<h1>Flickr Cats</h1>
+	<div id="flickr-output">
 	</div>
+	
+	<h1>Facebook <span id="fb-name">...</span></h1>
+	<div id="fb-output">
+	</div>
+	
 <script>
-// Example call
+
+//
+// Flicker
+//
+
 JSONp.get({
 	url : 'http://api.flickr.com/services/feeds/photos_public.gne',
 	callbackName : 'jsoncallback',
@@ -21,7 +36,35 @@ JSONp.get({
 			htmlArray.push('<img src="' + item.media.m + '" />');
 		}
 		
-		document.getElementById('output').innerHTML = htmlArray.join('');
+		document.getElementById('flickr-output').innerHTML = htmlArray.join('');
+	} 
+});
+
+//
+// Facebook Open Graph
+//
+
+// Album name
+JSONp.get({
+	url : 'http://graph.facebook.com/29961281468',
+	success : function( json ){
+		document.getElementById('fb-name').innerHTML = json.name; 
+	} 
+});
+
+// Album photos
+JSONp.get({
+	url : 'http://graph.facebook.com/29961281468/photos',
+	success : function( json ){ 
+		
+		var htmlArray = new Array();
+		
+		for( var i = 0; i < json.data.length; i++ ){
+			var item = json.data[i];
+			htmlArray.push('<img src="' + item.source + '" />');
+		}
+		
+		document.getElementById('fb-output').innerHTML = htmlArray.join('');
 	} 
 });
 </script>

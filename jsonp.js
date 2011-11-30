@@ -1,6 +1,7 @@
 var JSONp = {
 	
 	callbacks : {},
+	callbackCount : 0,
 	
 	buildQueryString : function( params ){
 		
@@ -25,7 +26,8 @@ var JSONp = {
 		
 		// Generate call ID
 		var d = new Date();
-		params.cbID = 'cb' + d.getTime();
+		JSONp.callbackCount++;
+		params.cbID = 'cb' + d.getTime() + '_' + JSONp.callbackCount;
 		
 		// Assign callback function
 		JSONp.callbacks[params.cbID] = function(json){
@@ -39,11 +41,11 @@ var JSONp = {
 		
 		// Create script tag
 		var el = document.createElement('script');
-	    el.src = params.url + '?' + JSONp.buildQueryString(params);
-	    el.id = params.cbID;
+		el.src = params.url + '?' + JSONp.buildQueryString(params);
+		el.id = params.cbID;
 	    
-	    // Write into head tags
-	    var head = document.getElementsByTagName('head')[0];
+		// Write into head tags
+		var head = document.getElementsByTagName('head')[0];
 		head.insertBefore(el, head.firstChild);
 	}
 	
