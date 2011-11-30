@@ -26,11 +26,11 @@ var JSONp = {
 		
 		// Generate call ID
 		var d = new Date();
-		JSONp.callbackCount++;
-		params.cbID = 'cb' + d.getTime() + '_' + JSONp.callbackCount;
+		this.callbackCount++;
+		params.cbID = 'cb' + d.getTime() + '_' + this.callbackCount;
 		
 		// Assign callback function
-		JSONp.callbacks[params.cbID] = function(json){
+		this.callbacks[params.cbID] = function(json){
 			params.success(json);
 			
 			// Cleanup script tags
@@ -41,7 +41,7 @@ var JSONp = {
 		
 		// Create script tag
 		var el = document.createElement('script');
-		el.src = params.url + '?' + JSONp.buildQueryString(params);
+		el.src = params.url + '?' + this.buildQueryString(params);
 		el.id = params.cbID;
 	    
 		// Write into head tags
