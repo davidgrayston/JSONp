@@ -9,7 +9,7 @@ For example, creating an embed script for websites that you don't have control o
 Usage
 -----
 
-Include the json.js file (or copy the code and incorporate it your application)
+Include the json.js file (or copy the code and incorporate it into your application)
 
 You can make calls like so:
 
